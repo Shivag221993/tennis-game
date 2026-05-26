@@ -1,6 +1,6 @@
 import { useState } from "react";
-
-const scoreNames = ["Love", "Fifteen", "Thirty", "Forty"];
+import { SCORE_NAMES, MESSAGES } from "../common/constants";
+import "./TennisGame.css";
 
 export default function TennisGame() {
   const [p1, setP1] = useState(0);
@@ -8,29 +8,41 @@ export default function TennisGame() {
 
   const getScore = () => {
     if (p1 >= 3 && p2 >= 3) {
-      if (p1 === p2) return "Deuce";
-      if (p1 === p2 + 1) return "Advantage Player 1";
-      if (p2 === p1 + 1) return "Advantage Player 2";
-      if (p1 >= p2 + 2) return "Player 1 Wins!";
-      if (p2 >= p1 + 2) return "Player 2 Wins!";
+      if (p1 === p2) return MESSAGES.DEUCE;
+      if (p1 === p2 + 1) return MESSAGES.ADV_P1;
+      if (p2 === p1 + 1) return MESSAGES.ADV_P2;
+      if (p1 >= p2 + 2) return MESSAGES.WIN_P1;
+      if (p2 >= p1 + 2) return MESSAGES.WIN_P2;
     }
-    if (p1 >= 4) return "Player 1 Wins!";
-    if (p2 >= 4) return "Player 2 Wins!";
-    return `${scoreNames[p1]} - ${scoreNames[p2]}`;
+    if (p1 >= 4) return MESSAGES.WIN_P1;
+    if (p2 >= 4) return MESSAGES.WIN_P2;
+    return `${SCORE_NAMES[p1]} - ${SCORE_NAMES[p2]}`;
   };
 
   const score = getScore();
   const gameOver = score.includes("Wins!");
 
+  const resetGame = () => {
+    setP1(0);
+    setP2(0);
+  };
+
   return (
-    <div>
-      <h1>{score}</h1>
-      <button onClick={() => setP1(p1 + 1)} disabled={gameOver}>
-        Player 1 Scores
-      </button>
-      <button onClick={() => setP2(p2 + 1)} disabled={gameOver}>
-        Player 2 Scores
-      </button>
+    <div className="tennis-container">
+      <h1 className="score">{score}</h1>
+      <div className="buttons">
+        <button onClick={() => setP1(p1 + 1)} disabled={gameOver}>
+          {MESSAGES.BUTTON_P1}
+        </button>
+        <button onClick={() => setP2(p2 + 1)} disabled={gameOver}>
+          {MESSAGES.BUTTON_P2}
+        </button>
+        {gameOver && (
+          <button className="reset-btn" onClick={resetGame}>
+            {MESSAGES.RESET}
+          </button>
+        )}
+      </div>
     </div>
   );
 }
