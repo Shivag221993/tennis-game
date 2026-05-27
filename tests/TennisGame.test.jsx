@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import TennisGame from "./TennisGame";
-import { SCORE_NAMES, MESSAGES } from "../common/constants";
+import TennisGame from "../components/TennisGame";
+import { SCORE_NAMES, MESSAGES } from "../constants/constants";
 
 describe("TennisGame scoring", () => {
   it("initial score is Love - Love", () => {
